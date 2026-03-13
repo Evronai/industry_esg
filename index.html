@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tovah Advisory | ESG 2026 Intelligence Radar</title>
+    <title>Enterprise ESG | 2026 Intelligence Radar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
     <style>
@@ -136,14 +136,18 @@
             margin-top: 25px;
             background: #0F172A;
             border-left: 4px solid #8B5CF6;
-            padding: 20px;
+            padding: 25px;
             border-radius: 0 16px 16px 0;
             font-size: 14px;
         }
-        .kb-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #1E293B; }
+        .kb-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #1E293B; }
         .kb-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        .kb-title { color: #A78BFA; font-weight: 700; margin-bottom: 5px; display: flex; justify-content: space-between;}
-        .kb-text { color: #CBD5E1; }
+        .kb-title { color: #F8FAFC; font-size: 16px; font-weight: 700; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;}
+        .kb-year { font-size: 12px; background: rgba(139, 92, 246, 0.2); color: #A78BFA; padding: 4px 10px; border-radius: 20px;}
+        
+        .kb-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        .kb-req { background: rgba(245, 158, 11, 0.1); border-left: 3px solid #F59E0B; padding: 8px 12px; color: #CBD5E1; }
+        .kb-ben { background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10B981; padding: 8px 12px; color: #CBD5E1; }
 
         .radar-container { height: 320px; position: relative; margin-bottom: 10px; }
         .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
@@ -161,11 +165,11 @@
         <header class="header">
             <h1>
                 <i class="fas fa-satellite-dish" style="color: #3B82F6;"></i>
-                <span class="header-brand">TOVAH</span> ESG 2026 Radar
+                <span class="header-brand">ENTERPRISE</span> ESG Telemetry
             </h1>
             <div class="badges-container">
-                <div class="badge free"><i class="fas fa-unlock"></i> Free Tier</div>
-                <div class="badge live"><i class="fas fa-circle" style="animation: pulse 2s infinite;"></i> Telemetry Active</div>
+                <div class="badge free"><i class="fas fa-unlock"></i> Open Beta</div>
+                <div class="badge live"><i class="fas fa-circle" style="animation: pulse 2s infinite;"></i> Pipeline Active</div>
             </div>
         </header>
 
@@ -212,18 +216,30 @@
         </div>
 
         <section class="knowledge-base" aria-label="Regulatory Intelligence Knowledge Base">
-            <h2 class="card-title" style="color: #F8FAFC; margin-bottom: 15px;"><i class="fas fa-book-open"></i> 2026 Regulatory Engine (Offline Knowledge Base)</h2>
+            <h2 class="card-title" style="color: #A78BFA; margin-bottom: 20px;"><i class="fas fa-gavel"></i> 2026 Regulatory Intelligence Engine</h2>
+            
             <div class="kb-item">
-                <div class="kb-title">CSRD: Double Materiality Mandate <span>Enforcement: FY2025/2026</span></div>
-                <div class="kb-text">As of 2026, the Corporate Sustainability Reporting Directive requires >50,000 enterprises to report not just how climate impacts their financials (financial materiality), but how their operations impact the environment and society (impact materiality). The dashboard above models this dual-axis requirement in real-time.</div>
+                <div class="kb-title">CSRD: Corporate Sustainability Reporting Directive <span class="kb-year">Enforcement Active</span></div>
+                <div class="kb-grid">
+                    <div class="kb-req"><strong>Requirement:</strong> Mandatory "Double Materiality" assessment. Companies must audit both their financial climate risks and their outward impact on the environment/society.</div>
+                    <div class="kb-ben"><strong>Benefit:</strong> Standardized data significantly lowers the cost of capital. Automated CSRD compliance prevents greenwashing penalties and secures access to EU institutional markets.</div>
+                </div>
             </div>
+
             <div class="kb-item">
-                <div class="kb-title">CSDDD: Supply Chain Liability <span>Enforcement: Phased 2027+</span></div>
-                <div class="kb-text">The Corporate Sustainability Due Diligence Directive moves ESG from a reporting exercise to a legal liability. Companies are now legally responsible for environmental and human rights violations deep within their Tier 2 and Tier 3 supply chains. Notice the "Social" metric telemetry prioritizing labor rights.</div>
+                <div class="kb-title">CSDDD: Supply Chain Liability <span class="kb-year">Phased 2026+</span></div>
+                <div class="kb-grid">
+                    <div class="kb-req"><strong>Requirement:</strong> ESG moves from a reporting exercise to strict legal liability. Requires mapping Tier 1-3 suppliers to identify and mitigate human rights and environmental violations.</div>
+                    <div class="kb-ben"><strong>Benefit:</strong> Transforms fragile supply chains into resilient networks. Early adopters avoid import bans and operational disruptions caused by geopolitical or climate shocks.</div>
+                </div>
             </div>
+
             <div class="kb-item">
-                <div class="kb-title">ISSB (IFRS S1 & S2): The Global Baseline <span>Adoption: Global 2026</span></div>
-                <div class="kb-text">Consolidating the fragmented framework landscape, the ISSB standards have absorbed SASB and TCFD. The telemetry engine automatically cross-maps operational inputs against IFRS S2 climate-related disclosures to prevent greenwashing penalties.</div>
+                <div class="kb-title">ISSB (IFRS S1 & S2): The Global Baseline <span class="kb-year">Global Adoption</span></div>
+                <div class="kb-grid">
+                    <div class="kb-req"><strong>Requirement:</strong> Consolidation of fragmented frameworks (SASB/TCFD). Demands the integration of climate-related risks directly into standard financial statements.</div>
+                    <div class="kb-ben"><strong>Benefit:</strong> Unifies the CFO and CSO offices. Provides investors with investment-grade, auditable metrics, directly driving up corporate valuations and shareholder trust.</div>
+                </div>
             </div>
         </section>
 
@@ -240,7 +256,7 @@
             </section>
 
             <section class="card">
-                <h2 class="card-title"><i class="fas fa-brain"></i> AI Supply Chain Insights</h2>
+                <h2 class="card-title"><i class="fas fa-brain"></i> Supply Chain Insights</h2>
                 <div style="filter: blur(4px); user-select: none; opacity: 0.4;">
                     <div style="padding: 10px; background: #1E293B; margin-bottom: 8px; border-left: 3px solid #ef4444;">Critical: Tier 2 supplier labor violation detected.</div>
                     <div style="padding: 10px; background: #1E293B; margin-bottom: 8px; border-left: 3px solid #f59e0b;">Warning: Scope 3 carbon data gap in logistics.</div>
@@ -248,9 +264,9 @@
                 </div>
                 <div class="locked-overlay">
                     <i class="fas fa-lock"></i>
-                    <h3>Premium Feature</h3>
-                    <p>Unlock deep-tier supply chain mapping and automated gap analysis.</p>
-                    <button class="upgrade-btn" onclick="alert('Redirecting to Tovah Advisory Enterprise contact page...')">Upgrade to Tovah Enterprise</button>
+                    <h3>Enterprise Tier Required</h3>
+                    <p>Unlock automated gap analysis and deep-tier supply chain mapping.</p>
+                    <button class="upgrade-btn" onclick="alert('Enterprise API token required to activate Supply Chain AI modules.')">Request API Token</button>
                 </div>
             </section>
 
@@ -266,8 +282,8 @@
                 <div class="locked-overlay">
                     <i class="fas fa-chart-area"></i>
                     <h3>Predictive AI Locked</h3>
-                    <p>Forecast your compliance trajectory and stress-test target viability.</p>
-                    <button class="upgrade-btn" onclick="alert('Redirecting to Tovah Advisory Enterprise contact page...')">Upgrade to Tovah Enterprise</button>
+                    <p>Forecast compliance trajectories and stress-test sustainability targets.</p>
+                    <button class="upgrade-btn" onclick="alert('Enterprise API token required to activate Predictive Modeling.')">Request API Token</button>
                 </div>
             </section>
         </div>
@@ -279,7 +295,6 @@
         function initChart() {
             const ctx = document.getElementById('esgRadar').getContext('2d');
             
-            // Only showing Current data for the Free tier. Target data is reserved for premium.
             radarChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
@@ -326,7 +341,7 @@
             const composite = Math.round((env * 0.4) + (social * 0.3) + (gov * 0.3));
             document.getElementById('mainScore').textContent = composite;
 
-            // Update Framework Alignments (Simulated logic based on inputs)
+            // Update Framework Alignments
             const euTax = Math.round(env * 0.9 + gov * 0.1);
             const sfdr = Math.round((env + social) / 2);
             const ifrs = Math.round(env * 0.8 + gov * 0.2);
@@ -352,13 +367,12 @@
                 // Simulate a real-time data push adjusting the live chart (without moving sliders)
                 let tempEnv = Math.min(100, Math.max(0, baseEnv + (Math.floor(Math.random() * 3) - 1)));
                 let tempSocial = Math.min(100, Math.max(0, baseSocial + (Math.floor(Math.random() * 3) - 1)));
-                let gov = parseInt(document.getElementById('govSlider').value); // Governance rarely fluctuates live
+                let gov = parseInt(document.getElementById('govSlider').value);
                 
-                // Update chart directly to show active telemetry
                 radarChart.data.datasets[0].data[0] = tempEnv;
                 radarChart.data.datasets[0].data[1] = tempSocial;
                 radarChart.data.datasets[0].data[2] = gov;
-                radarChart.update('none'); // Update without full animation for a natural "breathing" effect
+                radarChart.update('none'); 
             }, 2500);
         };
     </script>
