@@ -3,160 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise ESG | 2026 Intelligence Radar</title>
+    <title>TTSE GSS+ Bond | Assurance & Telemetry Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0A0F1E;
-            color: #F8FAFC;
-            padding: 20px;
-            line-height: 1.5;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #F4F6F8;
+            color: #1E293B;
+            padding: 20px 40px;
+            line-height: 1.6;
         }
 
         .dashboard { max-width: 1400px; margin: 0 auto; }
 
-        /* Header */
+        /* Corporate Header - TTSE / IDB Theme */
         .header {
-            background: linear-gradient(135deg, #0F172A, #1E1B4B);
-            padding: 20px 30px;
-            border-radius: 16px;
-            margin-bottom: 25px;
+            background: #FFFFFF;
+            padding: 24px 30px;
+            margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #334155;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border-top: 4px solid #0056A3; /* TTSE/IDB Blue */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .header h1 { font-size: 24px; display: flex; align-items: center; gap: 12px; }
-        .header-brand { color: #3B82F6; font-weight: 800; letter-spacing: 1px; }
+        .header h1 { 
+            font-size: 22px; 
+            font-weight: 800;
+            color: #0F172A;
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            letter-spacing: -0.5px;
+        }
 
-        .badges-container { display: flex; gap: 10px; }
+        .badges-container { display: flex; gap: 12px; }
         .badge {
-            background: rgba(255,255,255,0.1);
+            background: #F8FAFC;
             padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 6px;
-            border: 1px solid #334155;
+            border: 1px solid #E2E8F0;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .badge.live { border-color: #ef4444; color: #ef4444; }
-        .badge.free { border-color: #10b981; color: #10b981; }
+        .badge.cbi { border-left: 3px solid #10B981; color: #10B981; } /* Climate Bonds Green */
+        .badge.idb { border-left: 3px solid #0056A3; color: #0056A3; } /* IDB Blue */
 
         /* Main Layout */
         .main-grid {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
-            gap: 25px;
-            margin-bottom: 25px;
+            gap: 30px;
+            margin-bottom: 30px;
         }
 
         .card {
-            background: #151E2F;
-            border-radius: 16px;
-            padding: 25px;
-            border: 1px solid #2D3748;
+            background: #FFFFFF;
+            padding: 30px;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
             position: relative;
             overflow: hidden;
         }
 
         .card-title {
-            font-size: 16px;
-            color: #94A3B8;
-            margin-bottom: 20px;
+            font-size: 14px;
+            color: #64748B;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
             gap: 8px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             font-weight: 700;
+            border-bottom: 1px solid #F1F5F9;
+            padding-bottom: 12px;
         }
 
-        /* Paywall / Locked Feature Styling */
-        .locked-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 15, 30, 0.7);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .locked-overlay i { font-size: 40px; color: #F59E0B; margin-bottom: 15px; }
-        .locked-overlay h3 { color: #F8FAFC; margin-bottom: 10px; }
-        .locked-overlay p { color: #94A3B8; font-size: 14px; margin-bottom: 15px; max-width: 80%; }
-        
-        .upgrade-btn {
-            background: linear-gradient(135deg, #F59E0B, #D97706);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .upgrade-btn:hover { transform: translateY(-2px); }
+        .card-title i { color: #0F172A; }
 
         /* Scores & Sliders */
         .score-large {
-            font-size: 56px;
+            font-size: 64px;
             font-weight: 800;
-            background: linear-gradient(135deg, #60a5fa, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #0056A3;
+            line-height: 1;
+            letter-spacing: -2px;
         }
 
-        .slider-group { margin-bottom: 20px; }
-        .slider-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
-        .slider-value { font-weight: 700; color: #60a5fa; }
+        .slider-group { margin-bottom: 24px; }
+        .slider-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; color: #475569; font-weight: 600; }
+        .slider-value { font-weight: 800; color: #0F172A; }
 
         input[type=range] {
-            width: 100%; height: 6px; background: #2D3748; border-radius: 4px; outline: none; -webkit-appearance: none;
+            width: 100%; height: 4px; background: #E2E8F0; outline: none; -webkit-appearance: none;
         }
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 18px; height: 18px; background: #3B82F6; border-radius: 50%; cursor: pointer; border: 2px solid white;
+            -webkit-appearance: none; width: 16px; height: 16px; background: #0056A3; cursor: pointer; border: 2px solid #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* Professor / Knowledge Base Section */
+        /* Institutional Knowledge Base */
         .knowledge-base {
-            margin-top: 25px;
-            background: #0F172A;
-            border-left: 4px solid #8B5CF6;
-            padding: 25px;
-            border-radius: 0 16px 16px 0;
-            font-size: 14px;
+            margin-top: 30px;
+            background: #FFFFFF;
+            border-top: 3px solid #10B981;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
-        .kb-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #1E293B; }
+        .kb-item { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #F1F5F9; }
         .kb-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        .kb-title { color: #F8FAFC; font-size: 16px; font-weight: 700; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;}
-        .kb-year { font-size: 12px; background: rgba(139, 92, 246, 0.2); color: #A78BFA; padding: 4px 10px; border-radius: 20px;}
+        .kb-title { color: #0F172A; font-size: 16px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;}
         
-        .kb-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
-        .kb-req { background: rgba(245, 158, 11, 0.1); border-left: 3px solid #F59E0B; padding: 8px 12px; color: #CBD5E1; }
-        .kb-ben { background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10B981; padding: 8px 12px; color: #CBD5E1; }
+        .kb-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .kb-req { background: #F8FAFC; border-left: 2px solid #0056A3; padding: 12px 16px; font-size: 13px; color: #334155; }
+        .kb-ben { background: #F8FAFC; border-left: 2px solid #10B981; padding: 12px 16px; font-size: 13px; color: #334155; }
+        .kb-req strong, .kb-ben strong { color: #0F172A; }
 
         .radar-container { height: 320px; position: relative; margin-bottom: 10px; }
         .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
-        .metric-card { background: #1E293B; padding: 15px; border-radius: 12px; border: 1px solid #334155; }
-        
-        .bottom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 25px; }
+        .metric-card { background: #F8FAFC; padding: 16px; border: 1px solid #E2E8F0; }
+        .metric-card .label { font-size: 12px; color: #64748B; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;}
+        .metric-card .value { font-size: 24px; font-weight: 800; color: #0F172A;}
+
+        .bottom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 30px; }
+
+        /* Risk Alerts */
+        .risk-alert { padding: 12px; background: #FEF2F2; border-left: 3px solid #EF4444; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #991B1B;}
+        .risk-safe { padding: 12px; background: #F0FDF4; border-left: 3px solid #10B981; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #065F46;}
 
         @media (max-width: 1024px) {
             .main-grid, .bottom-grid { grid-template-columns: 1fr; }
+            body { padding: 15px; }
         }
     </style>
 </head>
@@ -164,81 +151,73 @@
     <main class="dashboard">
         <header class="header">
             <h1>
-                <i class="fas fa-satellite-dish" style="color: #3B82F6;"></i>
-                <span class="header-brand">ENTERPRISE</span> ESG Telemetry
+                <i class="fas fa-university" style="color: #0056A3;"></i>
+                GSS+ BOND TELEMETRY <span style="font-weight: 300; color: #64748B;">| TTSE Issuance Platform</span>
             </h1>
             <div class="badges-container">
-                <div class="badge free"><i class="fas fa-unlock"></i> Open Beta</div>
-                <div class="badge live"><i class="fas fa-circle" style="animation: pulse 2s infinite;"></i> Pipeline Active</div>
+                <div class="badge idb"><i class="fas fa-check-circle"></i> IDB Invest Aligned</div>
+                <div class="badge cbi"><i class="fas fa-leaf"></i> CBI Taxonomy Verified</div>
             </div>
         </header>
 
         <div class="main-grid">
             
             <section class="card">
-                <h2 class="card-title"><i class="fas fa-radar"></i> 2026 Materiality Radar</h2>
+                <h2 class="card-title"><i class="fas fa-chart-pie"></i> GSS+ Capital Allocation Matrix</h2>
                 <div class="radar-container">
-                    <canvas id="esgRadar" aria-label="ESG Performance Radar Chart" role="img"></canvas>
+                    <canvas id="bondRadar" aria-label="GSS+ Bond Radar Chart" role="img"></canvas>
                 </div>
             </section>
 
             <section class="card">
-                <h2 class="card-title"><i class="fas fa-sliders-h"></i> Telemetry Inputs</h2>
-                <div style="text-align: center; margin-bottom: 25px;">
-                    <div class="score-large" id="mainScore" role="status" aria-live="polite">86</div>
-                    <div style="color: #94A3B8; font-size: 13px;">Real-Time Composite Score</div>
+                <h2 class="card-title"><i class="fas fa-satellite-dish"></i> Issuer Telemetry Inputs</h2>
+                <div style="text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 1px solid #F1F5F9;">
+                    <div class="score-large" id="capitalDeployed">TT$ 860M</div>
+                    <div style="color: #64748B; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px;">Capital Mobilized & Verified</div>
                 </div>
 
                 <div class="slider-group">
                     <div class="slider-header">
-                        <span><i class="fas fa-leaf" style="color: #10b981;"></i> Scope 1 & 2 Emissions</span>
-                        <span class="slider-value" id="envValue">85</span>
+                        <span>Green Projects (Renewable/Water) Execution</span>
+                        <span class="slider-value" id="greenValue">85%</span>
                     </div>
-                    <input type="range" id="envSlider" min="0" max="100" value="85" aria-label="Environment Score Slider" oninput="updateDashboard()">
+                    <input type="range" id="greenSlider" min="0" max="100" value="85" aria-label="Green Capital Slider" oninput="updateDashboard()">
                 </div>
 
                 <div class="slider-group">
                     <div class="slider-header">
-                        <span><i class="fas fa-users" style="color: #f59e0b;"></i> Human Rights & Labor</span>
-                        <span class="slider-value" id="socialValue">78</span>
+                        <span>Social Capital (SME/Housing) Deployed</span>
+                        <span class="slider-value" id="socialValue">78%</span>
                     </div>
-                    <input type="range" id="socialSlider" min="0" max="100" value="78" aria-label="Social Score Slider" oninput="updateDashboard()">
+                    <input type="range" id="socialSlider" min="0" max="100" value="78" aria-label="Social Capital Slider" oninput="updateDashboard()">
                 </div>
 
                 <div class="slider-group">
                     <div class="slider-header">
-                        <span><i class="fas fa-building" style="color: #8b5cf6;"></i> Board Accountability</span>
-                        <span class="slider-value" id="govValue">92</span>
+                        <span>SLB Target Performance (Carbon Reduction)</span>
+                        <span class="slider-value" id="slbValue">92%</span>
                     </div>
-                    <input type="range" id="govSlider" min="0" max="100" value="92" aria-label="Governance Score Slider" oninput="updateDashboard()">
+                    <input type="range" id="slbSlider" min="0" max="100" value="92" aria-label="SLB KPI Slider" oninput="updateDashboard()">
                 </div>
             </section>
         </div>
 
-        <section class="knowledge-base" aria-label="Regulatory Intelligence Knowledge Base">
-            <h2 class="card-title" style="color: #A78BFA; margin-bottom: 20px;"><i class="fas fa-gavel"></i> 2026 Regulatory Intelligence Engine</h2>
+        <section class="knowledge-base" aria-label="Bond Framework Guidelines">
+            <h2 class="card-title" style="color: #0F172A; margin-bottom: 24px; border-bottom: none;"><i class="fas fa-file-contract"></i> TTSE GSS+ Bond Guidelines Integration</h2>
             
             <div class="kb-item">
-                <div class="kb-title">CSRD: Corporate Sustainability Reporting Directive <span class="kb-year">Enforcement Active</span></div>
+                <div class="kb-title">Use of Proceeds (UoP) Integrity <span><i class="fas fa-shield-alt" style="color:#0056A3;"></i> IDB Invest Standard</span></div>
                 <div class="kb-grid">
-                    <div class="kb-req"><strong>Requirement:</strong> Mandatory "Double Materiality" assessment. Companies must audit both their financial climate risks and their outward impact on the environment/society.</div>
-                    <div class="kb-ben"><strong>Benefit:</strong> Standardized data significantly lowers the cost of capital. Automated CSRD compliance prevents greenwashing penalties and secures access to EU institutional markets.</div>
+                    <div class="kb-req"><strong>Assurance Protocol:</strong> Green and Social bonds require ring-fenced capital. Funds must be tracked down to the project level (e.g., solar grid upgrades or low-income housing) to prevent capital leakage.</div>
+                    <div class="kb-ben"><strong>System Logic:</strong> The telemetry engine maps capital outflows directly against approved TTSE taxonomies, providing investors with auditable, real-time Use of Proceeds reporting.</div>
                 </div>
             </div>
 
             <div class="kb-item">
-                <div class="kb-title">CSDDD: Supply Chain Liability <span class="kb-year">Phased 2026+</span></div>
+                <div class="kb-title">Sustainability-Linked Bonds (SLBs) & Financial Penalties <span><i class="fas fa-chart-line" style="color:#10B981;"></i> KPI Trigger</span></div>
                 <div class="kb-grid">
-                    <div class="kb-req"><strong>Requirement:</strong> ESG moves from a reporting exercise to strict legal liability. Requires mapping Tier 1-3 suppliers to identify and mitigate human rights and environmental violations.</div>
-                    <div class="kb-ben"><strong>Benefit:</strong> Transforms fragile supply chains into resilient networks. Early adopters avoid import bans and operational disruptions caused by geopolitical or climate shocks.</div>
-                </div>
-            </div>
-
-            <div class="kb-item">
-                <div class="kb-title">ISSB (IFRS S1 & S2): The Global Baseline <span class="kb-year">Global Adoption</span></div>
-                <div class="kb-grid">
-                    <div class="kb-req"><strong>Requirement:</strong> Consolidation of fragmented frameworks (SASB/TCFD). Demands the integration of climate-related risks directly into standard financial statements.</div>
-                    <div class="kb-ben"><strong>Benefit:</strong> Unifies the CFO and CSO offices. Provides investors with investment-grade, auditable metrics, directly driving up corporate valuations and shareholder trust.</div>
+                    <div class="kb-req"><strong>Assurance Protocol:</strong> Unlike UoP bonds, SLBs are tied to corporate-level targets (e.g., reducing operational emissions by 30%). Failing to hit the telemetry target triggers a coupon "step-up," costing the issuer millions in increased interest.</div>
+                    <div class="kb-ben"><strong>System Logic:</strong> The dashboard continuously audits SLB KPI performance, providing predictive warnings if the issuer is at risk of triggering a financial penalty.</div>
                 </div>
             </div>
         </section>
@@ -246,44 +225,32 @@
         <div class="bottom-grid">
             
             <section class="card">
-                <h2 class="card-title"><i class="fas fa-check-circle"></i> Framework Alignment</h2>
+                <h2 class="card-title"><i class="fas fa-check-double"></i> Portfolio Compliance</h2>
                 <div class="metrics-grid">
-                    <div class="metric-card"><div class="label" style="color:#94A3B8; font-size:12px;">EU Taxonomy v3.0</div><div class="value" id="euValue" style="color:#10b981;">89%</div></div>
-                    <div class="metric-card"><div class="label" style="color:#94A3B8; font-size:12px;">SFDR PAI Alignment</div><div class="value" id="sfdrValue" style="color:#3B82F6;">86%</div></div>
-                    <div class="metric-card"><div class="label" style="color:#94A3B8; font-size:12px;">IFRS S2 Readiness</div><div class="value" id="ifrsValue" style="color:#A78BFA;">94%</div></div>
-                    <div class="metric-card"><div class="label" style="color:#94A3B8; font-size:12px;">Scope 3 Data Quality</div><div class="value" style="color:#F59E0B;">72%</div></div>
+                    <div class="metric-card"><div class="label">CBI Taxonomy Match</div><div class="value" id="cbiValue">89%</div></div>
+                    <div class="metric-card"><div class="label">Impact Report Status</div><div class="value" id="reportStatus" style="color:#10B981;">ON TRACK</div></div>
+                    <div class="metric-card"><div class="label">Unallocated Capital</div><div class="value" id="unallocatedValue">TT$ 140M</div></div>
+                    <div class="metric-card"><div class="label">Third-Party Verification</div><div class="value">SECURED</div></div>
                 </div>
             </section>
 
             <section class="card">
-                <h2 class="card-title"><i class="fas fa-brain"></i> Supply Chain Insights</h2>
-                <div style="filter: blur(4px); user-select: none; opacity: 0.4;">
-                    <div style="padding: 10px; background: #1E293B; margin-bottom: 8px; border-left: 3px solid #ef4444;">Critical: Tier 2 supplier labor violation detected.</div>
-                    <div style="padding: 10px; background: #1E293B; margin-bottom: 8px; border-left: 3px solid #f59e0b;">Warning: Scope 3 carbon data gap in logistics.</div>
-                    <div style="padding: 10px; background: #1E293B; margin-bottom: 8px; border-left: 3px solid #10b981;">Optimized: Governance structures meet SEC guidelines.</div>
-                </div>
-                <div class="locked-overlay">
-                    <i class="fas fa-lock"></i>
-                    <h3>Enterprise Tier Required</h3>
-                    <p>Unlock automated gap analysis and deep-tier supply chain mapping.</p>
-                    <button class="upgrade-btn" onclick="alert('Enterprise API token required to activate Supply Chain AI modules.')">Request API Token</button>
-                </div>
-            </section>
-
-            <section class="card">
-                <h2 class="card-title"><i class="fas fa-chart-line"></i> 2027 Predictive Modeling</h2>
-                <div style="filter: blur(4px); user-select: none; opacity: 0.4; text-align: center;">
-                    <div class="score-large">94</div>
-                    <div style="color: #94A3B8; font-size: 13px; margin-bottom: 20px;">Forecasted 2027 Composite</div>
-                    <div style="display: flex; justify-content: space-around;">
-                        <div>E: 92</div><div>S: 88</div><div>G: 96</div>
+                <h2 class="card-title"><i class="fas fa-project-diagram"></i> SLB Step-Up Risk Forensics</h2>
+                <div id="riskContainer">
                     </div>
+                <div style="margin-top: 15px; font-size: 12px; color: #64748B;">
+                    <i class="fas fa-info-circle"></i> Telemetry monitors pre-agreed Sustainability Performance Targets (SPTs). If SLB execution falls below 80%, coupon step-up risk triggers.
                 </div>
-                <div class="locked-overlay">
-                    <i class="fas fa-chart-area"></i>
-                    <h3>Predictive AI Locked</h3>
-                    <p>Forecast compliance trajectories and stress-test sustainability targets.</p>
-                    <button class="upgrade-btn" onclick="alert('Enterprise API token required to activate Predictive Modeling.')">Request API Token</button>
+            </section>
+
+            <section class="card">
+                <h2 class="card-title"><i class="fas fa-globe-americas"></i> TTSE Regional Impact</h2>
+                <div style="text-align: center; padding-top: 10px;">
+                    <div style="font-size: 32px; font-weight: 800; color: #10B981;">14.2 MW</div>
+                    <div style="color: #64748B; font-size: 13px; font-weight: 600; text-transform: uppercase; margin-top: 5px; margin-bottom: 20px;">Renewable Capacity Added</div>
+                    
+                    <div style="font-size: 32px; font-weight: 800; color: #3B82F6;">450+</div>
+                    <div style="color: #64748B; font-size: 13px; font-weight: 600; text-transform: uppercase; margin-top: 5px;">SMEs Financed</div>
                 </div>
             </section>
         </div>
@@ -293,20 +260,20 @@
         let radarChart;
 
         function initChart() {
-            const ctx = document.getElementById('esgRadar').getContext('2d');
+            const ctx = document.getElementById('bondRadar').getContext('2d');
             
             radarChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['Emissions (E)', 'Labor (S)', 'Board (G)', 'IFRS S2', 'CSRD', 'EU Taxonomy', 'Supply Chain', 'Cyber Risk'],
+                    labels: ['Renewable Energy (UoP)', 'Water Infra (UoP)', 'Social Housing (UoP)', 'SME Financing (UoP)', 'SLB Emission Targets', 'Reporting Transparency', 'Data Governance', 'CBI Alignment'],
                     datasets: [{
-                        label: 'Live Telemetry',
-                        data: [85, 78, 92, 94, 91, 89, 72, 95],
-                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                        borderColor: '#3b82f6',
+                        label: 'Bond Execution Telemetry',
+                        data: [85, 80, 78, 88, 92, 95, 90, 89],
+                        backgroundColor: 'rgba(0, 86, 163, 0.1)',
+                        borderColor: '#0056A3',
                         borderWidth: 2,
-                        pointBackgroundColor: '#3b82f6',
-                        pointBorderColor: '#fff',
+                        pointBackgroundColor: '#0056A3',
+                        pointBorderColor: '#FFF',
                         pointRadius: 4,
                     }]
                 },
@@ -318,9 +285,9 @@
                     scales: {
                         r: {
                             min: 0, max: 100,
-                            ticks: { stepSize: 20, color: '#64748B', backdropColor: 'transparent' },
-                            grid: { color: '#1E293B' },
-                            pointLabels: { color: '#E2E8F0', font: { size: 11, family: '-apple-system, sans-serif' } }
+                            ticks: { stepSize: 20, color: '#94A3B8', backdropColor: 'transparent', font: {family: 'Inter'} },
+                            grid: { color: '#E2E8F0' },
+                            pointLabels: { color: '#475569', font: { size: 11, family: 'Inter', weight: '600' } }
                         }
                     }
                 }
@@ -328,30 +295,44 @@
         }
 
         function updateDashboard() {
-            const env = parseInt(document.getElementById('envSlider').value);
+            const green = parseInt(document.getElementById('greenSlider').value);
             const social = parseInt(document.getElementById('socialSlider').value);
-            const gov = parseInt(document.getElementById('govSlider').value);
+            const slb = parseInt(document.getElementById('slbSlider').value);
 
             // Update UI Numbers
-            document.getElementById('envValue').textContent = env;
-            document.getElementById('socialValue').textContent = social;
-            document.getElementById('govValue').textContent = gov;
+            document.getElementById('greenValue').textContent = green + '%';
+            document.getElementById('socialValue').textContent = social + '%';
+            document.getElementById('slbValue').textContent = slb + '%';
 
-            // Calculate Composite
-            const composite = Math.round((env * 0.4) + (social * 0.3) + (gov * 0.3));
-            document.getElementById('mainScore').textContent = composite;
-
-            // Update Framework Alignments
-            const euTax = Math.round(env * 0.9 + gov * 0.1);
-            const sfdr = Math.round((env + social) / 2);
-            const ifrs = Math.round(env * 0.8 + gov * 0.2);
+            // Calculate TT$ Capital Deployed (Based on 1 Billion total pool)
+            // Weightings: 400M Green, 300M Social, 300M SLB = 1 Billion Total
+            const deployedMillions = Math.round((green * 4) + (social * 3) + (slb * 3));
+            document.getElementById('capitalDeployed').textContent = `TT$ ${deployedMillions}M`;
             
-            document.getElementById('euValue').textContent = euTax + '%';
-            document.getElementById('sfdrValue').textContent = sfdr + '%';
-            document.getElementById('ifrsValue').textContent = ifrs + '%';
+            // Calculate Unallocated
+            const unallocated = 1000 - deployedMillions;
+            document.getElementById('unallocatedValue').textContent = `TT$ ${unallocated}M`;
+
+            // Update Compliance Metrics
+            const cbi = Math.round((green + social) / 2);
+            document.getElementById('cbiValue').textContent = cbi + '%';
+
+            // SLB Risk Logic
+            const riskContainer = document.getElementById('riskContainer');
+            if (slb < 80) {
+                riskContainer.innerHTML = `
+                    <div class="risk-alert">CRITICAL: SLB Carbon Target falling behind schedule (${slb}%). High probability of triggering +25 bps interest rate step-up.</div>
+                    <div class="risk-alert" style="background: #FFFBEB; border-color: #F59E0B; color: #B45309;">WARNING: Investor confidence risk detected. Issue interim disclosure.</div>
+                `;
+            } else {
+                riskContainer.innerHTML = `
+                    <div class="risk-safe">VERIFIED: SLB KPI execution at ${slb}%. No interest rate step-up risk detected at current trajectory.</div>
+                    <div class="risk-safe" style="background: #F8FAFC; border-color: #3B82F6; color: #1E293B;">Assurance models indicate targets will be met by FY close.</div>
+                `;
+            }
 
             // Update Radar Chart Array
-            radarChart.data.datasets[0].data = [env, social, gov, ifrs, Math.round((env+social+gov)/3), euTax, Math.round(social * 0.8), 95];
+            radarChart.data.datasets[0].data = [green, Math.round(green * 0.9), social, Math.round(social * 1.1), slb, 95, 90, cbi];
             radarChart.update();
         }
 
@@ -359,19 +340,18 @@
             initChart();
             updateDashboard();
             
-            // Client-side simulation of live field telemetry pulsing through the pipeline
             setInterval(function() {
-                let baseEnv = parseInt(document.getElementById('envSlider').value);
+                let baseGreen = parseInt(document.getElementById('greenSlider').value);
                 let baseSocial = parseInt(document.getElementById('socialSlider').value);
+                let baseSlb = parseInt(document.getElementById('slbSlider').value);
                 
-                // Simulate a real-time data push adjusting the live chart (without moving sliders)
-                let tempEnv = Math.min(100, Math.max(0, baseEnv + (Math.floor(Math.random() * 3) - 1)));
+                let tempGreen = Math.min(100, Math.max(0, baseGreen + (Math.floor(Math.random() * 3) - 1)));
                 let tempSocial = Math.min(100, Math.max(0, baseSocial + (Math.floor(Math.random() * 3) - 1)));
-                let gov = parseInt(document.getElementById('govSlider').value);
+                let tempSlb = Math.min(100, Math.max(0, baseSlb + (Math.floor(Math.random() * 2) - 0)));
                 
-                radarChart.data.datasets[0].data[0] = tempEnv;
-                radarChart.data.datasets[0].data[1] = tempSocial;
-                radarChart.data.datasets[0].data[2] = gov;
+                radarChart.data.datasets[0].data[0] = tempGreen;
+                radarChart.data.datasets[0].data[2] = tempSocial;
+                radarChart.data.datasets[0].data[4] = tempSlb;
                 radarChart.update('none'); 
             }, 2500);
         };
