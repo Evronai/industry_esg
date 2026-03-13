@@ -3,357 +3,447 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TTSE GSS+ Bond | Assurance & Telemetry Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>TTSE | Institutional GSS+ Assurance Terminal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
     <style>
+        :root {
+            --bg-deep: #0B1121;
+            --panel-bg: rgba(17, 24, 39, 0.7);
+            --panel-border: rgba(55, 65, 81, 0.5);
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent-blue: #3B82F6;
+            --accent-cyan: #06B6D4;
+            --accent-green: #10B981;
+            --accent-amber: #F59E0B;
+            --accent-red: #EF4444;
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: #F4F6F8;
-            color: #1E293B;
-            padding: 20px 40px;
-            line-height: 1.6;
+            font-family: var(--font-main);
+            background: radial-gradient(circle at top right, #1E1B4B 0%, var(--bg-deep) 40%, #050505 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 15px;
+            overflow-x: hidden;
         }
 
-        .dashboard { max-width: 1400px; margin: 0 auto; }
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
 
-        /* Corporate Header - TTSE / IDB Theme */
+        /* Live Ticker Tape */
+        .ticker-wrap {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--panel-border);
+            border-top: 1px solid var(--panel-border);
+            padding: 6px 0;
+            overflow: hidden;
+            margin-bottom: 20px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--accent-green);
+            letter-spacing: 1px;
+            display: flex;
+        }
+        .ticker {
+            white-space: nowrap;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Header */
         .header {
-            background: #FFFFFF;
-            padding: 24px 30px;
-            margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 4px solid #0056A3; /* TTSE/IDB Blue */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px 30px;
+            margin-bottom: 25px;
         }
-
-        .header h1 { 
-            font-size: 22px; 
-            font-weight: 800;
-            color: #0F172A;
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            letter-spacing: -0.5px;
+        .header-title { display: flex; align-items: center; gap: 15px; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+        .header-title img { height: 32px; filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5)); }
+        
+        .sys-status {
+            display: flex; align-items: center; gap: 20px; font-family: var(--font-mono); font-size: 12px;
         }
+        .status-badge { display: flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-green); padding: 6px 12px; border-radius: 4px; color: var(--accent-green); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);}
+        .pulse { width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; box-shadow: 0 0 10px var(--accent-green); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.5); } 100% { opacity: 1; transform: scale(1); } }
 
-        .badges-container { display: flex; gap: 12px; }
-        .badge {
-            background: #F8FAFC;
-            padding: 6px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid #E2E8F0;
-            color: #475569;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .badge.cbi { border-left: 3px solid #10B981; color: #10B981; } /* Climate Bonds Green */
-        .badge.idb { border-left: 3px solid #0056A3; color: #0056A3; } /* IDB Blue */
-
-        /* Main Layout */
-        .main-grid {
+        /* Grid Layout */
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: 300px 1fr 350px;
+            gap: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
-        .card {
-            background: #FFFFFF;
-            padding: 30px;
-            border: 1px solid #E2E8F0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            position: relative;
-            overflow: hidden;
+        .panel-header {
+            font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px;
+            padding: 15px 20px; border-bottom: 1px solid var(--panel-border); display: flex; justify-content: space-between; align-items: center;
         }
 
-        .card-title {
-            font-size: 14px;
-            color: #64748B;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            border-bottom: 1px solid #F1F5F9;
-            padding-bottom: 12px;
-        }
+        .panel-body { padding: 20px; }
 
-        .card-title i { color: #0F172A; }
-
-        /* Scores & Sliders */
-        .score-large {
-            font-size: 64px;
-            font-weight: 800;
-            color: #0056A3;
-            line-height: 1;
-            letter-spacing: -2px;
-        }
-
-        .slider-group { margin-bottom: 24px; }
-        .slider-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; color: #475569; font-weight: 600; }
-        .slider-value { font-weight: 800; color: #0F172A; }
-
+        /* Left Column: Controls & Metrics */
+        .control-group { margin-bottom: 25px; }
+        .control-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--text-main); }
+        .control-value { font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700; font-size: 15px; }
+        
         input[type=range] {
-            width: 100%; height: 4px; background: #E2E8F0; outline: none; -webkit-appearance: none;
+            width: 100%; height: 4px; background: rgba(255,255,255,0.1); outline: none; -webkit-appearance: none; border-radius: 2px;
         }
         input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 16px; height: 16px; background: #0056A3; cursor: pointer; border: 2px solid #FFFFFF; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            -webkit-appearance: none; width: 14px; height: 14px; background: var(--accent-cyan); border-radius: 50%; cursor: pointer; box-shadow: 0 0 12px var(--accent-cyan);
         }
 
-        /* Institutional Knowledge Base */
-        .knowledge-base {
-            margin-top: 30px;
-            background: #FFFFFF;
-            border-top: 3px solid #10B981;
-            padding: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-        .kb-item { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #F1F5F9; }
-        .kb-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        .kb-title { color: #0F172A; font-size: 16px; font-weight: 800; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;}
+        .big-metric { text-align: center; margin-bottom: 30px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .big-metric-val { font-size: 42px; font-weight: 800; background: linear-gradient(180deg, #FFFFFF 0%, #94A3B8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; font-family: var(--font-mono); }
+        .big-metric-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; }
+
+        /* Center Column: Radar & Analytics */
+        .chart-container { height: 450px; position: relative; width: 100%; display: flex; justify-content: center; align-items: center;}
         
-        .kb-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .kb-req { background: #F8FAFC; border-left: 2px solid #0056A3; padding: 12px 16px; font-size: 13px; color: #334155; }
-        .kb-ben { background: #F8FAFC; border-left: 2px solid #10B981; padding: 12px 16px; font-size: 13px; color: #334155; }
-        .kb-req strong, .kb-ben strong { color: #0F172A; }
+        .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .insight-card { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; border-left: 3px solid var(--accent-blue); }
+        .insight-card.warning { border-left-color: var(--accent-amber); }
+        .insight-title { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .insight-val { font-size: 20px; font-weight: 700; font-family: var(--font-mono); color: var(--text-main); }
 
-        .radar-container { height: 320px; position: relative; margin-bottom: 10px; }
-        .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
-        .metric-card { background: #F8FAFC; padding: 16px; border: 1px solid #E2E8F0; }
-        .metric-card .label { font-size: 12px; color: #64748B; font-weight: 600; text-transform: uppercase; margin-bottom: 8px;}
-        .metric-card .value { font-size: 24px; font-weight: 800; color: #0F172A;}
+        /* Right Column: Live Audit Terminal */
+        .terminal { background: #000000; border-radius: 8px; padding: 15px; height: 300px; overflow-y: hidden; position: relative; border: 1px solid #1F2937; }
+        .terminal::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, transparent 60%, #000000 100%); pointer-events: none; }
+        .log-entry { font-family: var(--font-mono); font-size: 11px; margin-bottom: 8px; line-height: 1.4; color: #4ADE80; opacity: 0; animation: fadeIn 0.3s forwards;}
+        .log-time { color: #64748B; margin-right: 8px; }
+        .log-hash { color: var(--accent-blue); }
+        .log-warn { color: var(--accent-amber); }
+        .log-crit { color: var(--accent-red); background: rgba(239, 68, 68, 0.1); display: inline-block; padding: 0 4px;}
+        
+        @keyframes fadeIn { to { opacity: 1; } }
 
-        .bottom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 30px; }
+        /* Progress Bars */
+        .prog-item { margin-bottom: 15px; }
+        .prog-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; color: var(--text-muted); }
+        .prog-track { width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
+        .prog-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); border-radius: 3px; transition: width 0.5s ease; }
 
-        /* Risk Alerts */
-        .risk-alert { padding: 12px; background: #FEF2F2; border-left: 3px solid #EF4444; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #991B1B;}
-        .risk-safe { padding: 12px; background: #F0FDF4; border-left: 3px solid #10B981; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: #065F46;}
-
-        @media (max-width: 1024px) {
-            .main-grid, .bottom-grid { grid-template-columns: 1fr; }
-            body { padding: 15px; }
+        @media (max-width: 1200px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .chart-container { height: 350px; }
         }
     </style>
 </head>
 <body>
-    <main class="dashboard">
-        <header class="header">
-            <h1>
-                <i class="fas fa-university" style="color: #0056A3;"></i>
-                GSS+ BOND TELEMETRY <span style="font-weight: 300; color: #64748B;">| TTSE Issuance Platform</span>
-            </h1>
-            <div class="badges-container">
-                <div class="badge idb"><i class="fas fa-check-circle"></i> IDB Invest Aligned</div>
-                <div class="badge cbi"><i class="fas fa-leaf"></i> CBI Taxonomy Verified</div>
-            </div>
-        </header>
 
-        <div class="main-grid">
-            
-            <section class="card">
-                <h2 class="card-title"><i class="fas fa-chart-pie"></i> GSS+ Capital Allocation Matrix</h2>
-                <div class="radar-container">
-                    <canvas id="bondRadar" aria-label="GSS+ Bond Radar Chart" role="img"></canvas>
-                </div>
-            </section>
-
-            <section class="card">
-                <h2 class="card-title"><i class="fas fa-satellite-dish"></i> Issuer Telemetry Inputs</h2>
-                <div style="text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 1px solid #F1F5F9;">
-                    <div class="score-large" id="capitalDeployed">TT$ 860M</div>
-                    <div style="color: #64748B; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px;">Capital Mobilized & Verified</div>
-                </div>
-
-                <div class="slider-group">
-                    <div class="slider-header">
-                        <span>Green Projects (Renewable/Water) Execution</span>
-                        <span class="slider-value" id="greenValue">85%</span>
-                    </div>
-                    <input type="range" id="greenSlider" min="0" max="100" value="85" aria-label="Green Capital Slider" oninput="updateDashboard()">
-                </div>
-
-                <div class="slider-group">
-                    <div class="slider-header">
-                        <span>Social Capital (SME/Housing) Deployed</span>
-                        <span class="slider-value" id="socialValue">78%</span>
-                    </div>
-                    <input type="range" id="socialSlider" min="0" max="100" value="78" aria-label="Social Capital Slider" oninput="updateDashboard()">
-                </div>
-
-                <div class="slider-group">
-                    <div class="slider-header">
-                        <span>SLB Target Performance (Carbon Reduction)</span>
-                        <span class="slider-value" id="slbValue">92%</span>
-                    </div>
-                    <input type="range" id="slbSlider" min="0" max="100" value="92" aria-label="SLB KPI Slider" oninput="updateDashboard()">
-                </div>
-            </section>
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <span style="margin-right: 50px;">🔴 LIVE AUDIT STREAM</span>
+            <span style="margin-right: 50px;">TTSE GSS+ BOND ISSUANCE: TT$1.00 BILLION AUTHORIZED</span>
+            <span style="margin-right: 50px;">IDB INVEST FRAMEWORK ALIGNED</span>
+            <span style="margin-right: 50px;">CLIMATE BONDS INITIATIVE: VERIFIED</span>
+            <span style="margin-right: 50px;">NEXT COUPON DATE: OCT 15, 2026</span>
+            <span style="margin-right: 50px;">SYSTEM STATUS: SECURE</span>
+            <span style="margin-right: 50px;">🔴 LIVE AUDIT STREAM</span>
+            <span style="margin-right: 50px;">TTSE GSS+ BOND ISSUANCE: TT$1.00 BILLION AUTHORIZED</span>
         </div>
+    </div>
 
-        <section class="knowledge-base" aria-label="Bond Framework Guidelines">
-            <h2 class="card-title" style="color: #0F172A; margin-bottom: 24px; border-bottom: none;"><i class="fas fa-file-contract"></i> TTSE GSS+ Bond Guidelines Integration</h2>
-            
-            <div class="kb-item">
-                <div class="kb-title">Use of Proceeds (UoP) Integrity <span><i class="fas fa-shield-alt" style="color:#0056A3;"></i> IDB Invest Standard</span></div>
-                <div class="kb-grid">
-                    <div class="kb-req"><strong>Assurance Protocol:</strong> Green and Social bonds require ring-fenced capital. Funds must be tracked down to the project level (e.g., solar grid upgrades or low-income housing) to prevent capital leakage.</div>
-                    <div class="kb-ben"><strong>System Logic:</strong> The telemetry engine maps capital outflows directly against approved TTSE taxonomies, providing investors with auditable, real-time Use of Proceeds reporting.</div>
-                </div>
+    <header class="header glass-panel">
+        <div class="header-title">
+            <i class="fas fa-layer-group" style="color: var(--accent-cyan);"></i>
+            GSS+ Capital Assurance OS <span style="font-weight: 300; color: var(--text-muted); font-size: 18px;">| Regional Telemetry</span>
+        </div>
+        <div class="sys-status">
+            <div style="color: var(--text-muted);">SERVER: POS-Node-01</div>
+            <div class="status-badge">
+                <div class="pulse"></div> ENCRYPTED FEED
             </div>
+        </div>
+    </header>
 
-            <div class="kb-item">
-                <div class="kb-title">Sustainability-Linked Bonds (SLBs) & Financial Penalties <span><i class="fas fa-chart-line" style="color:#10B981;"></i> KPI Trigger</span></div>
-                <div class="kb-grid">
-                    <div class="kb-req"><strong>Assurance Protocol:</strong> Unlike UoP bonds, SLBs are tied to corporate-level targets (e.g., reducing operational emissions by 30%). Failing to hit the telemetry target triggers a coupon "step-up," costing the issuer millions in increased interest.</div>
-                    <div class="kb-ben"><strong>System Logic:</strong> The dashboard continuously audits SLB KPI performance, providing predictive warnings if the issuer is at risk of triggering a financial penalty.</div>
+    <main class="dashboard-grid">
+        
+        <section class="glass-panel">
+            <div class="panel-header">
+                <span><i class="fas fa-sliders-h"></i> Capital Deployment</span>
+            </div>
+            <div class="panel-body">
+                
+                <div class="big-metric">
+                    <div class="big-metric-val" id="totalDeployed">TT$ 860M</div>
+                    <div class="big-metric-label">Total Validated Drawdown</div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Pt. Lisas Solar Infra (Green)</span>
+                        <span class="control-value" id="valGreen">85%</span>
+                    </div>
+                    <input type="range" id="sliderGreen" min="0" max="100" value="85" oninput="updateSystem()">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>HDC Sustainable Housing (Social)</span>
+                        <span class="control-value" id="valSocial" style="color: var(--accent-blue);">78%</span>
+                    </div>
+                    <input type="range" id="sliderSocial" min="0" max="100" value="78" oninput="updateSystem()">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>SLB Target: Emissions Cut</span>
+                        <span class="control-value" id="valSLB" style="color: var(--accent-amber);">92%</span>
+                    </div>
+                    <input type="range" id="sliderSLB" min="0" max="100" value="92" oninput="updateSystem()">
+                </div>
+
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--panel-border);">
+                    <div class="prog-item">
+                        <div class="prog-label"><span>Unallocated Pool</span> <span style="font-family: var(--font-mono); color: white;" id="valUnallocated">TT$ 140M</span></div>
+                        <div class="prog-track"><div class="prog-fill" id="fillUnallocated" style="width: 14%; background: #475569;"></div></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="glass-panel" style="display: flex; flex-direction: column;">
+            <div class="panel-header">
+                <span><i class="fas fa-satellite"></i> Double Materiality Matrix</span>
+                <span id="slbRiskBadge" style="font-size: 10px; background: rgba(16, 185, 129, 0.2); color: var(--accent-green); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--accent-green);">SLB RISK: LOW</span>
+            </div>
+            <div class="panel-body" style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
+                <div class="chart-container">
+                    <canvas id="mainRadar"></canvas>
+                </div>
+                
+                <div class="insight-grid">
+                    <div class="insight-card">
+                        <div class="insight-title">IDB Framework Alignment</div>
+                        <div class="insight-val" id="metricIDB" style="color: var(--accent-green);">94.2%</div>
+                    </div>
+                    <div class="insight-card warning" id="cardStepUp">
+                        <div class="insight-title">Coupon Step-Up Probability</div>
+                        <div class="insight-val" id="metricStepUp" style="color: var(--accent-amber);">1.4%</div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <div class="bottom-grid">
-            
-            <section class="card">
-                <h2 class="card-title"><i class="fas fa-check-double"></i> Portfolio Compliance</h2>
-                <div class="metrics-grid">
-                    <div class="metric-card"><div class="label">CBI Taxonomy Match</div><div class="value" id="cbiValue">89%</div></div>
-                    <div class="metric-card"><div class="label">Impact Report Status</div><div class="value" id="reportStatus" style="color:#10B981;">ON TRACK</div></div>
-                    <div class="metric-card"><div class="label">Unallocated Capital</div><div class="value" id="unallocatedValue">TT$ 140M</div></div>
-                    <div class="metric-card"><div class="label">Third-Party Verification</div><div class="value">SECURED</div></div>
-                </div>
-            </section>
-
-            <section class="card">
-                <h2 class="card-title"><i class="fas fa-project-diagram"></i> SLB Step-Up Risk Forensics</h2>
-                <div id="riskContainer">
+        <section class="glass-panel">
+            <div class="panel-header">
+                <span><i class="fas fa-terminal"></i> Audit Telemetry</span>
+                <i class="fas fa-lock" style="color: var(--text-muted); font-size: 10px;"></i>
+            </div>
+            <div class="panel-body">
+                <div class="terminal" id="terminalLog">
                     </div>
-                <div style="margin-top: 15px; font-size: 12px; color: #64748B;">
-                    <i class="fas fa-info-circle"></i> Telemetry monitors pre-agreed Sustainability Performance Targets (SPTs). If SLB execution falls below 80%, coupon step-up risk triggers.
-                </div>
-            </section>
 
-            <section class="card">
-                <h2 class="card-title"><i class="fas fa-globe-americas"></i> TTSE Regional Impact</h2>
-                <div style="text-align: center; padding-top: 10px;">
-                    <div style="font-size: 32px; font-weight: 800; color: #10B981;">14.2 MW</div>
-                    <div style="color: #64748B; font-size: 13px; font-weight: 600; text-transform: uppercase; margin-top: 5px; margin-bottom: 20px;">Renewable Capacity Added</div>
+                <div style="margin-top: 25px;">
+                    <div class="panel-header" style="padding: 0 0 10px 0; border: none; font-size: 11px;">Regional Impact</div>
                     
-                    <div style="font-size: 32px; font-weight: 800; color: #3B82F6;">450+</div>
-                    <div style="color: #64748B; font-size: 13px; font-weight: 600; text-transform: uppercase; margin-top: 5px;">SMEs Financed</div>
+                    <div class="prog-item">
+                        <div class="prog-label"><span>Renewable Capacity (MW)</span> <span style="font-family: var(--font-mono); color: white;">14.2 / 20.0</span></div>
+                        <div class="prog-track"><div class="prog-fill" style="width: 71%; background: var(--accent-green);"></div></div>
+                    </div>
+                    <div class="prog-item">
+                        <div class="prog-label"><span>SME Green Loans Issued</span> <span style="font-family: var(--font-mono); color: white;">456 / 500</span></div>
+                        <div class="prog-track"><div class="prog-fill" style="width: 91%; background: var(--accent-blue);"></div></div>
+                    </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+
     </main>
 
     <script>
+        // Set chart default styles for dark theme
+        Chart.defaults.color = '#94A3B8';
+        Chart.defaults.font.family = "'JetBrains Mono', monospace";
+
         let radarChart;
+        const terminal = document.getElementById('terminalLog');
 
         function initChart() {
-            const ctx = document.getElementById('bondRadar').getContext('2d');
+            const ctx = document.getElementById('mainRadar').getContext('2d');
             
+            // Create a hyper-premium gradient fill
+            let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(6, 182, 212, 0.5)'); // Cyan
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0.05)'); // Blue fade
+
             radarChart = new Chart(ctx, {
                 type: 'radar',
                 data: {
-                    labels: ['Renewable Energy (UoP)', 'Water Infra (UoP)', 'Social Housing (UoP)', 'SME Financing (UoP)', 'SLB Emission Targets', 'Reporting Transparency', 'Data Governance', 'CBI Alignment'],
+                    labels: ['Solar Infra (UoP)', 'Water Resilience', 'SME Funding', 'Social Housing', 'SLB Targets', 'CBI Taxonomy', 'Data Integrity', 'Audit Trail'],
                     datasets: [{
-                        label: 'Bond Execution Telemetry',
-                        data: [85, 80, 78, 88, 92, 95, 90, 89],
-                        backgroundColor: 'rgba(0, 86, 163, 0.1)',
-                        borderColor: '#0056A3',
+                        label: 'Real-Time Vector',
+                        data: [85, 80, 88, 78, 92, 95, 99, 100],
+                        backgroundColor: gradient,
+                        borderColor: '#06B6D4',
                         borderWidth: 2,
-                        pointBackgroundColor: '#0056A3',
-                        pointBorderColor: '#FFF',
+                        pointBackgroundColor: '#0B1121',
+                        pointBorderColor: '#06B6D4',
+                        pointBorderWidth: 2,
                         pointRadius: 4,
+                        pointHoverRadius: 6,
+                        tension: 0.3 // Smooth curves
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    animation: { duration: 300 },
-                    plugins: { legend: { display: false } },
+                    animation: { duration: 400, easing: 'easeOutQuart' },
+                    plugins: { legend: { display: false }, tooltip: { backgroundColor: 'rgba(11, 17, 33, 0.9)', titleFont: { size: 13, family: 'Inter' }, bodyFont: { size: 14, family: 'JetBrains Mono' }, padding: 12, borderColor: '#374151', borderWidth: 1 } },
                     scales: {
                         r: {
                             min: 0, max: 100,
-                            ticks: { stepSize: 20, color: '#94A3B8', backdropColor: 'transparent', font: {family: 'Inter'} },
-                            grid: { color: '#E2E8F0' },
-                            pointLabels: { color: '#475569', font: { size: 11, family: 'Inter', weight: '600' } }
+                            ticks: { display: false, stepSize: 20 },
+                            grid: { color: 'rgba(55, 65, 81, 0.4)', circular: true },
+                            angleLines: { color: 'rgba(55, 65, 81, 0.4)' },
+                            pointLabels: { color: '#F8FAFC', font: { size: 11, family: 'Inter', weight: '600' }, padding: 15 }
                         }
                     }
                 }
             });
         }
 
-        function updateDashboard() {
-            const green = parseInt(document.getElementById('greenSlider').value);
-            const social = parseInt(document.getElementById('socialSlider').value);
-            const slb = parseInt(document.getElementById('slbSlider').value);
+        function updateSystem() {
+            const green = parseInt(document.getElementById('sliderGreen').value);
+            const social = parseInt(document.getElementById('sliderSocial').value);
+            const slb = parseInt(document.getElementById('sliderSLB').value);
 
-            // Update UI Numbers
-            document.getElementById('greenValue').textContent = green + '%';
-            document.getElementById('socialValue').textContent = social + '%';
-            document.getElementById('slbValue').textContent = slb + '%';
+            // Animate Number Updates
+            document.getElementById('valGreen').textContent = green + '%';
+            document.getElementById('valSocial').textContent = social + '%';
+            document.getElementById('valSLB').textContent = slb + '%';
 
-            // Calculate TT$ Capital Deployed (Based on 1 Billion total pool)
-            // Weightings: 400M Green, 300M Social, 300M SLB = 1 Billion Total
-            const deployedMillions = Math.round((green * 4) + (social * 3) + (slb * 3));
-            document.getElementById('capitalDeployed').textContent = `TT$ ${deployedMillions}M`;
+            // Calculate Deployed Capital
+            const deployed = Math.round((green * 4) + (social * 3) + (slb * 3));
+            document.getElementById('totalDeployed').textContent = `TT$ ${deployed}M`;
             
-            // Calculate Unallocated
-            const unallocated = 1000 - deployedMillions;
-            document.getElementById('unallocatedValue').textContent = `TT$ ${unallocated}M`;
+            const unallocated = 1000 - deployed;
+            document.getElementById('valUnallocated').textContent = `TT$ ${unallocated}M`;
+            document.getElementById('fillUnallocated').style.width = (unallocated / 10) + '%';
 
-            // Update Compliance Metrics
-            const cbi = Math.round((green + social) / 2);
-            document.getElementById('cbiValue').textContent = cbi + '%';
+            // SLB Logic Engine
+            const riskBadge = document.getElementById('slbRiskBadge');
+            const stepUpCard = document.getElementById('cardStepUp');
+            const stepUpMetric = document.getElementById('metricStepUp');
 
-            // SLB Risk Logic
-            const riskContainer = document.getElementById('riskContainer');
-            if (slb < 80) {
-                riskContainer.innerHTML = `
-                    <div class="risk-alert">CRITICAL: SLB Carbon Target falling behind schedule (${slb}%). High probability of triggering +25 bps interest rate step-up.</div>
-                    <div class="risk-alert" style="background: #FFFBEB; border-color: #F59E0B; color: #B45309;">WARNING: Investor confidence risk detected. Issue interim disclosure.</div>
-                `;
+            if (slb < 75) {
+                riskBadge.textContent = 'SLB RISK: CRITICAL';
+                riskBadge.style.background = 'rgba(239, 68, 68, 0.2)';
+                riskBadge.style.color = 'var(--accent-red)';
+                riskBadge.style.borderColor = 'var(--accent-red)';
+                stepUpCard.style.borderLeftColor = 'var(--accent-red)';
+                stepUpMetric.style.color = 'var(--accent-red)';
+                stepUpMetric.textContent = '84.6%';
+                addLog('CRITICAL: SLB target deviation detected. Step-up trigger imminent.', 'crit');
+            } else if (slb < 85) {
+                riskBadge.textContent = 'SLB RISK: ELEVATED';
+                riskBadge.style.background = 'rgba(245, 158, 11, 0.2)';
+                riskBadge.style.color = 'var(--accent-amber)';
+                riskBadge.style.borderColor = 'var(--accent-amber)';
+                stepUpCard.style.borderLeftColor = 'var(--accent-amber)';
+                stepUpMetric.style.color = 'var(--accent-amber)';
+                stepUpMetric.textContent = '32.1%';
+                addLog('WARN: SLB KPI tracking below optimal baseline.', 'warn');
             } else {
-                riskContainer.innerHTML = `
-                    <div class="risk-safe">VERIFIED: SLB KPI execution at ${slb}%. No interest rate step-up risk detected at current trajectory.</div>
-                    <div class="risk-safe" style="background: #F8FAFC; border-color: #3B82F6; color: #1E293B;">Assurance models indicate targets will be met by FY close.</div>
-                `;
+                riskBadge.textContent = 'SLB RISK: LOW';
+                riskBadge.style.background = 'rgba(16, 185, 129, 0.2)';
+                riskBadge.style.color = 'var(--accent-green)';
+                riskBadge.style.borderColor = 'var(--accent-green)';
+                stepUpCard.style.borderLeftColor = 'var(--accent-blue)';
+                stepUpMetric.style.color = 'var(--text-main)';
+                stepUpMetric.textContent = '1.4%';
             }
 
-            // Update Radar Chart Array
-            radarChart.data.datasets[0].data = [green, Math.round(green * 0.9), social, Math.round(social * 1.1), slb, 95, 90, cbi];
+            // Alignments
+            const idbAlign = (green * 0.5 + social * 0.5 + 5).toFixed(1);
+            document.getElementById('metricIDB').textContent = Math.min(100, idbAlign) + '%';
+
+            // Update Radar
+            radarChart.data.datasets[0].data = [green, 80, 88, social, slb, 95, 99, 100];
             radarChart.update();
+        }
+
+        // Fake Terminal Logger
+        function generateHash() {
+            return Math.random().toString(36).substring(2, 10).toUpperCase();
+        }
+
+        function addLog(msg, type = 'normal') {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute:'2-digit', second:'2-digit' }) + '.' + Math.floor(now.getMilliseconds()/100);
+            
+            let colorClass = '';
+            let prefix = '[OK]';
+            if(type === 'warn') { colorClass = 'log-warn'; prefix = '[WARN]'; }
+            if(type === 'crit') { colorClass = 'log-crit'; prefix = '[ERR]'; }
+
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-time">${time}</span> <span class="log-hash">0x${generateHash()}</span> <span class="${colorClass}">${prefix} ${msg}</span>`;
+            
+            terminal.insertBefore(entry, terminal.firstChild);
+            
+            // Keep terminal clean
+            if(terminal.children.length > 20) {
+                terminal.removeChild(terminal.lastChild);
+            }
         }
 
         window.onload = function() {
             initChart();
-            updateDashboard();
+            updateSystem();
             
+            // Initial logs
+            addLog('Initializing TTSE GSS+ Telemetry Engine...');
+            addLog('Establishing secure handshake with IDB API...');
+            addLog('Connection verified. Syncing Use of Proceeds (UoP) ledgers.');
+
+            // Simulated Live Data Feed & Logs
             setInterval(function() {
-                let baseGreen = parseInt(document.getElementById('greenSlider').value);
-                let baseSocial = parseInt(document.getElementById('socialSlider').value);
-                let baseSlb = parseInt(document.getElementById('slbSlider').value);
+                // Micro-fluctuations
+                let bG = parseInt(document.getElementById('sliderGreen').value);
+                let bS = parseInt(document.getElementById('sliderSocial').value);
+                let bSLB = parseInt(document.getElementById('sliderSLB').value);
                 
-                let tempGreen = Math.min(100, Math.max(0, baseGreen + (Math.floor(Math.random() * 3) - 1)));
-                let tempSocial = Math.min(100, Math.max(0, baseSocial + (Math.floor(Math.random() * 3) - 1)));
-                let tempSlb = Math.min(100, Math.max(0, baseSlb + (Math.floor(Math.random() * 2) - 0)));
-                
-                radarChart.data.datasets[0].data[0] = tempGreen;
-                radarChart.data.datasets[0].data[2] = tempSocial;
-                radarChart.data.datasets[0].data[4] = tempSlb;
+                radarChart.data.datasets[0].data[0] = Math.min(100, Math.max(0, bG + (Math.floor(Math.random() * 3) - 1)));
+                radarChart.data.datasets[0].data[3] = Math.min(100, Math.max(0, bS + (Math.floor(Math.random() * 3) - 1)));
+                radarChart.data.datasets[0].data[4] = Math.min(100, Math.max(0, bSLB + (Math.floor(Math.random() * 2))));
                 radarChart.update('none'); 
-            }, 2500);
+
+                // Terminal spam
+                const msgs = [
+                    "Verifying Pt. Lisas capital tranche...",
+                    "Validating Scope 2 emissions report vs SLB target...",
+                    "Smart contract audit complete. No UoP leakage detected.",
+                    "Pinging HDC ledger for social housing allocation data...",
+                    "CBI Taxonomy check: PASSED.",
+                    "Re-calculating interest rate step-up probabilities."
+                ];
+                if(Math.random() > 0.4) {
+                    addLog(msgs[Math.floor(Math.random() * msgs.length)]);
+                }
+
+            }, 2000);
         };
     </script>
 </body>
